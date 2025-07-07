@@ -7,7 +7,8 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 
 const generateAccessAndRefreshTokens = async (userId)=>{
     try {
-        const user = await User.findById({userId});
+        const user = await User.findById({_id:userId});
+       
        const accessToken = user.generateAccessToken();
        const refreshToken = user.generateRefreshToken();
 
@@ -112,8 +113,9 @@ const loginUser = asyncHandler(async (req,res)=>{
 
 
     const {email,username,password} = req.body
+ 
 
-    if(!username || !email){
+    if(!(username || email)){
         throw new ApiError(400,"username or email is required")
     }
 
